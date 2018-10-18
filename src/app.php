@@ -13,24 +13,17 @@ $app = new Application();
 $app->register(new IslandoraServiceProvider());
 $app->register(new YamlConfigServiceProvider(__DIR__ . '/../cfg/config.yaml'));
 
-
 $app['homarus.controller'] = function ($app) {
   return new HomarusController(
     $app['crayfish.cmd_execute_service'],
-    $app['monolog']
+    $app['crayfish.homarus.mime_types.valid'],
+    $app['crayfish.homarus.mime_types.default_video'],
+    $app['crayfish.homarus.executable'],
+    $app['monolog'],
+    $app['crayfish.homarus.mime_to_format']
   );
 };
 
-$app->get('/sayYo', "homarus.controller:sayYo");
-
-$app->get('/convert', "homarus.controller:convert")
-  ->before(function (Request $request, Application $app) {
-    return $app['crayfish.apix_middleware']->before($request);
-  });
-
-
-$app->get('/sayHello', function () {
-  return "Hello World";
-});
+$app->get('/convert', "homarus.controller:convert");
 
 return $app;

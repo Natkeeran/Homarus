@@ -6,13 +6,13 @@
 @prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
 
 <> a apix:Extension;
-    rdfs:label "Image Conversion Service";
-    rdfs:comment "imagemagick's convert as a microservice";
+    rdfs:label "Ffmpeg Service";
+    rdfs:comment "ffmpeg as a microservice";
     apix:exposesService islandora:ConvertService;
     apix:exposesServiceAt "svc:convert";
     apix:bindsTo <#class> .
 
 <#class> owl:intersectionOf (
         ldp:NonRDFSource
-        [ a owl:Restriction; owl:onProperty ebucore:hasMimeType; owl:hasValue "image/tiff", "image/jp2", "image/jpeg", "image/png", "image/gif", "image/bmp" ]
+        [ a owl:Restriction; owl:onProperty ebucore:hasMimeType; owl:hasValue "video/mp4", "video/x-msvideo", "video/ogg" ]
 ) .
