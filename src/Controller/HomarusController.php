@@ -76,11 +76,16 @@ class HomarusController {
     $content_type = $this->get_content_type($content_types);
     $format = $this->get_ffmpeg_format($content_type);
 
+    $cmd_params = "";
+    if($format == "mp4") {
+      $cmd_params = " -vcodec libx264 -preset medium -acodec aac -strict -2 -ab 128k -ac 2 -async 1 -movflags frag_keyframe+empty_moov ";
+    }
+
     // Arguments to ffmpeg command are sent as a custom header
     $args = $request->headers->get('X-Islandora-Args');
     $this->log->debug("X-Islandora-Args:", ['args' => $args]);
 
-    $cmd_string = "$this->executable -i $source -f $format -";
+    $cmd_string = "$this->executable -i $source $cmd_params -f $format -";
     $this->log->info('Ffempg Command:', ['cmd' => $cmd_string]);
 
     // Return response.
@@ -88,7 +93,7 @@ class HomarusController {
       return new StreamedResponse(
         $this->cmd->execute($cmd_string, $source),
         200,
-        ['Content-Type' => "video/avi"]
+        ['Content-Type' => $content_type]
       );
     } catch (\RuntimeException $e) {
       $this->log->error("RuntimeException:", ['exception' => $e]);
