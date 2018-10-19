@@ -15,5 +15,5 @@ Alias "/homarus" "/var/www/html/Crayfish/Homarus/src"
 
 ### Testing
 ```
-curl -H "Authorization: Bearer islandora" -H "Accept: video/x-msvideo" -H "Apix-Ldp-Resource:http://localhost:8080/fcrepo/rest/testvideo" http://localhost:8000/houdini/convert --output output.avi
+curl -H "Authorization: Bearer islandora" -H "Accept: video/x-msvideo" -H "Apix-Ldp-Resource:http://localhost:8080/fcrepo/rest/testvideo" http://localhost:8000/homarus/convert --output output.avi
 ```
